@@ -57,7 +57,10 @@ defmodule Transcripter.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.2"}
+      {:bandit, "~> 1.2"},
+      {:bumblebee, github: "elixir-nx/bumblebee"},
+      {:exla, "~> 0.4"},
+      {:nx, github: "elixir-nx/nx", sparse: "nx", override: true}
     ]
   end
 

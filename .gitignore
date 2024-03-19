@@ -1,0 +1,36 @@
+# Elixir/Phoenix specific
+/_build/
+/deps/
+/*.ez
+/config/*.secret.exs
+/config/*.secret.ex
+/priv/static/
+node_modules/
+
+# Generated on crash by the VM
+erl_crash.dump
+
+# Static artifact directory (You may want to keep or ignore depending on your deployment)
+/public/assets
+
+# If using IntelliJ/IDEA/ElixirLS, you might want to ignore:
+.idea/
+*.iml
+*.elixir_ls/
+*.beam
+
+# Ignore package lock files if not tracking dependency locks
+mix.lock
+yarn.lock
+package-lock.json
+
+# System specific
+.DS_Store
+Thumbs.db
+
+# Ignore secrets
+config/master.key
+config/credentials.yml.enc
+
+# Ignore test coverage reports
+cover/
