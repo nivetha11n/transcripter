@@ -7,6 +7,9 @@ defmodule Transcripter.Application do
 
   @impl true
   def start(_type, _args) do
+
+    Nx.default_backend(EXLA.Backend)
+
     children = [
       TranscripterWeb.Telemetry,
       Transcripter.Repo,

@@ -25,6 +25,7 @@ defmodule TranscripterWeb.PageLive do
   end
 
   defp process_audio(uploaded_audio) do
+
     IO.inspect(uploaded_audio, label: "Received audio file , okay bye")
   end
 

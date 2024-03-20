@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :nx, :default_backend, EXLA.Backend
+
 config :transcripter,
   ecto_repos: [Transcripter.Repo],
   generators: [timestamp_type: :utc_datetime]
