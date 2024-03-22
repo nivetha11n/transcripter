@@ -9,6 +9,10 @@ import Config
 
 config :nx, :default_backend, EXLA.Backend
 
+config :mime, :types, %{
+  "audio/mp4" => ["m4a"]
+}
+
 config :transcripter,
   ecto_repos: [Transcripter.Repo],
   generators: [timestamp_type: :utc_datetime]

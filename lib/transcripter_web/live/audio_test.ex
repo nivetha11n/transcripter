@@ -9,7 +9,7 @@ serving =
   Bumblebee.Audio.speech_to_text_whisper(whisper, featurizer, tokenizer, generation_config,
     defn_options: [compiler: EXLA]
   )
- result = Nx.Serving.run(serving, {:file, path})
+   Nx.Serving.run(serving, {:file, path})
 
   end
 end

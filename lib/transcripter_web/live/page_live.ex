@@ -7,11 +7,14 @@ defmodule TranscripterWeb.PageLive do
     |> assign(:transcription, nil)
     |> assign(:uploaded_files, [])
     |> assign(:form, to_form(%{}))
-    |> allow_upload(:audio, accept: ["audio/mpeg", "audio/wav"], max_entries: 1, auto_upload: true)
+    |> allow_upload(:audio, accept: ["audio/*"], max_entries: 1, auto_upload: true)
+
+    #|> allow_upload(:audio, accept: ["audio/mpeg", "audio/wav","audio/mp4"], max_entries: 1, auto_upload: true)
 
    {:ok, assign(socket, form: to_form(%{}))}
   end
 
+  @spec render(any()) :: Phoenix.LiveView.Rendered.t()
   def render(assigns) do
     ~H"""
      <div>
