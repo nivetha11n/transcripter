@@ -60,7 +60,10 @@ defmodule Transcripter.MixProject do
       {:bandit, "~> 1.2"},
       {:bumblebee, github: "elixir-nx/bumblebee"},
       {:exla, "~> 0.4"},
-      {:nx, github: "elixir-nx/nx", sparse: "nx", override: true}
+      {:nx, github: "elixir-nx/nx", sparse: "nx", override: true},
+      {:uuid, "~> 1.1.8"},
+      {:elixir_uuid, "~> 1.2.1"}
+
     ]
   end
 

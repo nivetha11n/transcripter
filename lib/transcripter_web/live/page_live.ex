@@ -7,6 +7,8 @@ defmodule TranscripterWeb.PageLive do
     |> assign(:transcription, nil)
     |> assign(:uploaded_files, [])
     |> assign(:form, to_form(%{}))
+    |> assign(:recording_status,nil)
+    |> assign(:last_recorded_file,nil)
     |> allow_upload(:audio, accept: ["audio/*"], max_entries: 1, auto_upload: true)
 
     #|> allow_upload(:audio, accept: ["audio/mpeg", "audio/wav","audio/mp4"], max_entries: 1, auto_upload: true)
@@ -33,15 +35,21 @@ defmodule TranscripterWeb.PageLive do
      </div>
 
      <p><%= @transcription %></p>
+     <p><%= @last_recorded_file %></p>
    """
   end
 
-  def handle_event("start_recording", _params, socket) do
-    Task.async(fn ->
-      TranscripterWeb.RecordTest.record_audio_segment("//Users//nivethanagarajan//output2314.mp3")
-    end)
-    {:noreply, assign(socket, recording_status: "Recording")}
-  end
+
+    def handle_event("start_recording", _params, socket) do
+      unique_filename = "output_" <> UUID.uuid4() <> ".mp3"
+      output_path = "//Users//nivethanagarajan//" <> unique_filename
+
+      Task.async(fn ->
+        TranscripterWeb.RecordTest.record_audio_segment(output_path)
+      end)
+
+      {:noreply, assign(socket, recording_status: "Recording", last_recorded_file: unique_filename)}
+    end
 
   def handle_event("stop_recording", _params, socket) do
     # Add logic to stop recording here. This might include uploading the recorded file for transcription.
