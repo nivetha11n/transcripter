@@ -18,6 +18,11 @@ defmodule TranscripterWeb.PageLive do
   def render(assigns) do
     ~H"""
      <div>
+      <.button phx-click="start_recording">Start Recording</.button>
+      <.button phx-click="stop_recording">Stop Recording</.button>
+
+     </div>
+     <div>
      <.simple_form for = {@form}
      id="tempfolder"
      phx-submit = "convert_to_text"
@@ -29,6 +34,18 @@ defmodule TranscripterWeb.PageLive do
 
      <p><%= @transcription %></p>
    """
+  end
+
+  def handle_event("start_recording", _params, socket) do
+    Task.async(fn ->
+      TranscripterWeb.RecordTest.record_audio_segment("//Users//nivethanagarajan//output2314.mp3")
+    end)
+    {:noreply, assign(socket, recording_status: "Recording")}
+  end
+
+  def handle_event("stop_recording", _params, socket) do
+    # Add logic to stop recording here. This might include uploading the recorded file for transcription.
+    {:noreply, assign(socket, recording_status: "Not Recording")}
   end
 
   def handle_event("convert_to_text", _params, socket) do
