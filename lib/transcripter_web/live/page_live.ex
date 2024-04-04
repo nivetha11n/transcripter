@@ -7,22 +7,20 @@ defmodule TranscripterWeb.PageLive do
     |> assign(:recording_status,nil)
     |> assign(:last_recorded_file,nil)
     |> assign(:transcription_result, nil)
-
-    #|> allow_upload(:audio, accept: ["audio/mpeg", "audio/wav","audio/mp4"], max_entries: 1, auto_upload: true)
-
    {:ok, assign(socket, form: to_form(%{}))}
   end
 
   @spec render(any()) :: Phoenix.LiveView.Rendered.t()
   def render(assigns) do
+    #<p><%= @last_recorded_file %></p>
     ~H"""
      <div>
       <.button phx-click="start_recording">Start Recording</.button>
       <.button phx-click="stop_recording">Stop Recording</.button>
      </div>
-
-     <p><%= @last_recorded_file %></p>
+     <div>
       <p><%= @transcription_result %></p>
+      </div>
    """
   end
 
@@ -35,14 +33,14 @@ defmodule TranscripterWeb.PageLive do
         TranscripterWeb.RecordTest.record_audio_segment(output_path)
       end)
 
-      Process.sleep(10_000)
+      Process.sleep(15_000)
       transcription_result = speech_to_text(output_path)
 
       {:noreply, assign(socket, recording_status: "Recording", last_recorded_file: unique_filename, transcription_result: transcription_result)}
     end
 
   def handle_event("stop_recording", _params, socket) do
-    # Add logic to stop recording here. This might include uploading the recorded file for transcription.
+
     {:noreply, assign(socket, recording_status: "Not Recording")}
   end
 
