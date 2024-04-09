@@ -17,7 +17,7 @@ defmodule TranscripterWeb.Router do
   scope "/", TranscripterWeb do
     pipe_through :browser
 
-    live "/", PageLive, :home
+    live "/", PagestreamLive, :home
   end
 
   # Other scopes may use custom stacks.
