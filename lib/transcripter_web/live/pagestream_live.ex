@@ -1,4 +1,4 @@
-defmodule TranscripterWeb.PagesevLive do
+defmodule TranscripterWeb.PagestreamLive do
   use TranscripterWeb, :live_view
 
   @ffmpeg_command "ffmpeg"
@@ -69,7 +69,7 @@ defp read_latest_segment(playlist_path) do
   end
 end
 
- # Handle file event for new transcription segment
+
  def handle_info({:file_event, _, :modified, playlist_path}, socket) do
   if Path.basename(playlist_path) == "playlist.m3u8" do
     latest_segment = read_latest_segment(playlist_path)
@@ -90,7 +90,7 @@ end
 
 
 
- def speech_to_text(path) do
+ defp speech_to_text(path) do
   {:ok, whisper} = Bumblebee.load_model({:hf, "openai/whisper-tiny"})
   {:ok, featurizer} = Bumblebee.load_featurizer({:hf, "openai/whisper-tiny"})
   {:ok, tokenizer} = Bumblebee.load_tokenizer({:hf, "openai/whisper-tiny"})

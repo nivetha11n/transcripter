@@ -21,7 +21,7 @@
           'Elixir.TranscripterWeb.Layouts',
           'Elixir.TranscripterWeb.PageController',
           'Elixir.TranscripterWeb.PageHTML','Elixir.TranscripterWeb.PageLive',
-          'Elixir.TranscripterWeb.PagesevLive',
+          'Elixir.TranscripterWeb.PagestreamLive',
           'Elixir.TranscripterWeb.RecordTest','Elixir.TranscripterWeb.Router',
           'Elixir.TranscripterWeb.Telemetry']},
      {registered,[]},
