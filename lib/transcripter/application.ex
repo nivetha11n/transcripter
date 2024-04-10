@@ -2,6 +2,7 @@ defmodule Transcripter.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
+  @folder_path "/Users/nivethanagarajan/audiostream"
 
   use Application
 
@@ -20,6 +21,13 @@ defmodule Transcripter.Application do
       # Start a worker by calling: Transcripter.Worker.start_link(arg)
       # {Transcripter.Worker, arg},
       # Start to serve requests, typically the last entry
+     # %{
+      #  id: FileSystem,  # Unique identifier for the child spec
+      #  start: {FileSystem, :start_link, [dirs: [@folder_path], name: :my_monitor_name]},
+      #  type: :worker,  # Assuming FileSystem acts as a worker
+       # restart: :permanent,  # If it should always be restarted on termination
+       # shutdown: 5000  # Graceful shutdown timeout in milliseconds
+      #},
       TranscripterWeb.Endpoint
     ]
 

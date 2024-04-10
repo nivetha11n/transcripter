@@ -63,8 +63,8 @@ defmodule Transcripter.MixProject do
       {:nx, github: "elixir-nx/nx", sparse: "nx", override: true},
       {:uuid, "~> 1.1.8"},
       {:elixir_uuid, "~> 1.2.1"},
-      {:porcelain, "~> 2.0.3"},
-      {:rambo, "~> 0.3"}
+      {:rambo, "~> 0.3"},
+      {:file_system, "~> 1.0"},
 
     ]
   end
