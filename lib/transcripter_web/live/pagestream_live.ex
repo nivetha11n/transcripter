@@ -22,8 +22,6 @@ defmodule TranscripterWeb.PagestreamLive do
     {:ok, watcher_pid} = FileSystem.start_link(dirs: ["/Users/nivethanagarajan/audiostream"])
      FileSystem.subscribe(watcher_pid)
 
-
-     # Initialize the socket's assigns
      socket =
        assign(socket, :recording_status, "Not started")
        |> assign(:ffmpeg_pid, nil)
@@ -34,18 +32,24 @@ defmodule TranscripterWeb.PagestreamLive do
      {:ok, socket}
   end
 
+
+
   def render(assigns) do
     ~H"""
-    <div>
-      <.button phx-click="start">Start Recording</.button>
-      <.button phx-click="stop">Stop Recording</.button>
-    </div>
-    <p><%= @recording_status %></p>
-     <p><%= Enum.join(Enum.reverse(@transcription_result), " ") %></p>
+      <div class="flex justify-between items-center w-full py-2 px-4">
+        <button class="px-6 py-2 bg-blue-500 text-white text-lg font-bold rounded-lg shadow-lg transition duration-300 ease-in-out hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50" phx-click="start">Start Recording</button>
+        <button class="px-6 py-2 bg-gray-500 text-white text-lg font-bold rounded-lg shadow-lg transition duration-300 ease-in-out hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50" phx-click="clear_screen">Clear Screen</button>
+        <button class="px-6 py-2 bg-red-500 text-white text-lg font-bold rounded-lg shadow-lg transition duration-300 ease-in-out hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-opacity-50" phx-click="stop">Stop Recording</button>
+      </div>
+      <div>
+        <h2 class="text-gray-700 text-2xl font-bold text-center py-12">Status: <%= @recording_status %></h2>
+      </div>
+      <div class="mt-4 px-4">
+        <p><%= Enum.join(Enum.reverse(@transcription_result), "\n") %></p>
+      </div>
     """
   end
 
-  #<%= for transcription <- @transcription_results do %> <% end %>
 
 
   def handle_event("start", _params, socket) do
@@ -64,6 +68,10 @@ defmodule TranscripterWeb.PagestreamLive do
   Task.await(task, 20000)
 
   {:noreply, assign(socket, recording_status: "Stopped Recording , click on Start Recording to start again", ffmpeg_pid: nil, transcription_results: [])}
+ end
+
+ def handle_event("clear_screen", _params, socket) do
+    {:noreply, assign(socket, transcription_result: [])}
  end
 
  def handle_info({:file_event, _pid, {path, events}}, socket) do
@@ -122,8 +130,14 @@ end
   )
   result = Nx.Serving.run(serving, {:file, path})
 
-  texts = Enum.map(result.chunks, fn chunk -> chunk.text end)
-  Enum.join(texts, " ")
+  #texts = Enum.map(result.chunks, fn chunk -> chunk.text end)
+  #Enum.join(texts, " ")
+  combined_text = Enum.map(result.chunks, fn chunk -> chunk.text end)
+  |> Enum.join(" ")
+
+# Get the current UTC timestamp and prepend it to the combined text
+timestamp = DateTime.utc_now() |> DateTime.to_string()
+"#{timestamp}: #{combined_text}\n"
 end
 
 
